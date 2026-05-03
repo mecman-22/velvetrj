@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velvet RJ — Transfer Executivo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --gold-dim: #8A6B2A;
+    --black: #080808;
+    --black-soft: #111111;
+    --black-card: #141414;
+    --white: #F5F0E8;
+    --white-dim: #9A9080;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* GRAIN OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.4;
+  }
+
+  /* HEADER */
+  header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 28px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    background: linear-gradient(to bottom, rgba(8,8,8,0.95) 0%, transparent 100%);
+  }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .logo span {
+    color: var(--white);
+    font-style: italic;
+  }
+
+  nav a {
+    color: var(--white-dim);
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-left: 36px;
+    transition: color 0.3s;
+  }
+
+  nav a:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    right: -10%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 55%;
+    height: 80%;
+    background: radial-gradient(ellipse at center, rgba(201,168,76,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-line {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    margin-bottom: 32px;
+    animation: expandLine 1.2s ease forwards;
+  }
+
+  @keyframes expandLine {
+    from { width: 0; opacity: 0; }
+    to { width: 40px; opacity: 1; }
+  }
+
+  .hero-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 7vw, 6.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    color: var(--white-dim);
+    max-width: 380px;
+    line-height: 2;
+    margin-bottom: 52px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.7s forwards;
+  }
+
+  .cta-group {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.9s forwards;
+  }
+
+  .cta-primary {
+    background: var(--gold);
+    color: var(--black);
+    padding: 16px 36px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold-light);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .cta-primary:hover::before { transform: translateX(0); }
+  .cta-primary span { position: relative; z-index: 1; }
+
+  .cta-secondary {
+    color: var(--white-dim);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 1px solid var(--gold-dim);
+    padding-bottom: 2px;
+    transition: color 0.3s;
+  }
+
+  .cta-secondary:hover { color: var(--gold); }
+
+  /* DECORATIVE NUMBER */
+  .hero-number {
+    position: absolute;
+    right: 60px;
+    bottom: 60px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12rem;
+    font-weight: 300;
+    color: rgba(201,168,76,0.04);
+    letter-spacing: -0.05em;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* DIVIDER */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 0 60px;
+    margin: 20px 0;
+  }
+
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201,168,76,0.3), transparent);
+  }
+
+  .divider-icon {
+    color: var(--gold);
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+
+  /* SERVICES */
+  .section {
+    padding: 100px 60px;
+  }
+
+  .section-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 60px;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    background: rgba(201,168,76,0.15);
+  }
+
+  .service-card {
+    background: var(--black-card);
+    padding: 48px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.4s ease;
+  }
+
+  .service-card:hover { background: #181818; }
+  .service-card:hover::before { width: 100%; }
+
+  .service-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    color: var(--gold-dim);
+    letter-spacing: 0.2em;
+    margin-bottom: 28px;
+  }
+
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .service-desc {
+    font-size: 0.72rem;
+    color: var(--white-dim);
+    line-height: 2;
+    letter-spacing: 0.05em;
+  }
+
+  /* DIFERENCIAIS */
+  .features {
+    background: var(--black-soft);
+    padding: 100px 60px;
+  }
+
+  .features-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .features-text .section-title { margin-bottom: 24px; }
+
+  .features-text p {
+    font-size: 0.78rem;
+    color: var(--white-dim);
+    line-height: 2.2;
+    letter-spacing: 0.05em;
+    margin-bottom: 40px;
+  }
+
+  .feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .feature-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--white-dim);
+  }
+
+  .feature-list li::before {
+    content: '—';
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .features-visual {
+    position: relative;
+    height: 420px;
+  }
+
+  .features-box {
+    position: absolute;
+    border: 1px solid rgba(201,168,76,0.2);
+    background: var(--black-card);
+  }
+
+  .features-box.main {
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 40px;
+  }
+
+  .features-box.accent {
+    width: 120px;
+    height: 120px;
+    top: -20px;
+    right: -20px;
+    background: rgba(201,168,76,0.05);
+    border-color: rgba(201,168,76,0.4);
+  }
+
+  .features-box.accent2 {
+    width: 80px;
+    height: 80px;
+    bottom: -15px;
+    left: -15px;
+    border-color: rgba(201,168,76,0.2);
+  }
+
+  .stat-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .stat-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-desc {
+    font-size: 0.68rem;
+    color: var(--white-dim);
+    letter-spacing: 0.1em;
+  }
+
+  /* PAGAMENTO */
+  .payment {
+    padding: 80px 60px;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    border-top: 1px solid rgba(201,168,76,0.1);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .payment-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  .payment-line {
+    width: 1px;
+    height: 40px;
+    background: rgba(201,168,76,0.3);
+  }
+
+  .payment-methods {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+
+  .payment-method {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: var(--white-dim);
+    letter-spacing: 0.05em;
+    transition: color 0.3s;
+  }
+
+  .payment-method:hover { color: var(--gold); }
+
+  /* CTA FINAL */
+  .cta-section {
+    padding: 120px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(201,168,76,0.05) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .cta-section .section-label { text-align: center; }
+
+  .cta-section .section-title {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 48px;
+  }
+
+  .whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 20px 52px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .whatsapp-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+    z-index: 0;
+  }
+
+  .whatsapp-btn:hover { color: var(--black); }
+  .whatsapp-btn:hover::before { transform: translateY(0); }
+  .whatsapp-btn span { position: relative; z-index: 1; }
+
+  .whatsapp-icon {
+    position: relative;
+    z-index: 1;
+    width: 16px;
+    height: 16px;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .footer-copy {
+    font-size: 0.6rem;
+    color: var(--white-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    header { padding: 24px 28px; }
+    nav { display: none; }
+    .hero { padding: 0 28px; min-height: 100svh; }
+    .hero-number { display: none; }
+    .section { padding: 70px 28px; }
+    .features { padding: 70px 28px; }
+    .features-inner { grid-template-columns: 1fr; gap: 50px; }
+    .features-visual { height: 280px; }
+    .payment { padding: 50px 28px; flex-direction: column; gap: 30px; }
+    .cta-section { padding: 80px 28px; }
+    footer { padding: 30px 28px; flex-direction: column; gap: 12px; text-align: center; }
+    .divider { padding: 0 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">Velvet <span>RJ</span></div>
+  <nav>
+    <a href="#servicos">Serviços</a>
+    <a href="#diferenciais">Diferenciais</a>
+    <a href="#contato">Contato</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-line"></div>
+  <p class="hero-tag">Transfer Executivo · Rio de Janeiro</p>
+  <h1 class="hero-title">
+    Cada trajeto,<br>
+    uma <em>experiência</em><br>
+    singular.
+  </h1>
+  <p class="hero-sub">
+    Discrição, pontualidade e conforto absoluto.<br>
+    Para quem valoriza o tempo e a qualidade da jornada.
+  </p>
+  <div class="cta-group">
+    <a href="https://wa.me/55219XXXXXXXX" class="cta-primary"><span>Solicitar Transfer</span></a>
+    <a href="#servicos" class="cta-secondary">Ver Serviços</a>
+  </div>
+  <div class="hero-number">V</div>
+</section>
+
+<div class="divider"><span class="divider-icon">&#9670;</span></div>
+
+<!-- SERVICES -->
+<section class="section" id="servicos">
+  <p class="section-label">O que oferecemos</p>
+  <h2 class="section-title">Serviços <em>exclusivos</em><br>para cada ocasião.</h2>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <p class="service-number">01</p>
+      <h3 class="service-name">Transfer Executivo</h3>
+      <p class="service-desc">Trajetos corporativos e pessoais pelo Rio de Janeiro com máximo conforto e pontualidade garantida.</p>
+    </div>
+    <div class="service-card">
+      <p class="service-number">02</p>
+      <h3 class="service-name">Transfer Aeroporto</h3>
+      <p class="service-desc">Atendimento nos aeroportos Galeão (GIG) e Santos Dumont (SDU). Monitoramento de voo em tempo real.</p>
+    </div>
+    <div class="service-card">
+      <p class="service-number">03</p>
+      <h3 class="service-name">Transfer para Eventos</h3>
+      <p class="service-desc">Shows, casamentos, formaturas e eventos corporativos. Presença discreta e impecável.</p>
+    </div>
+    <div class="service-card">
+      <p class="service-number">04</p>
+      <h3 class="service-name">Diária Executiva</h3>
+      <p class="service-desc">Acompanhamento por hora para reuniões, compromissos múltiplos ou roteiros personalizados.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section class="features" id="diferenciais">
+  <div class="features-inner">
+    <div class="features-text">
+      <p class="section-label">Por que a Velvet RJ</p>
+      <h2 class="section-title">Padrão <em>Black</em><br>em cada detalhe.</h2>
+      <p>Não é apenas um transfer. É a certeza de que cada corrida será conduzida com o mesmo rigor e atenção que você exige em tudo que importa.</p>
+      <ul class="feature-list">
+        <li>Veículo categoria Black — higienizado e revisado</li>
+        <li>Motorista com experiência e perfil discreto</li>
+        <li>Confirmação antecipada e aviso de chegada</li>
+        <li>Ar-condicionado, carregador e Wi-Fi a bordo</li>
+        <li>Tolerância zero com atraso</li>
+        <li>Atendimento via WhatsApp com resposta rápida</li>
+      </ul>
+    </div>
+    <div class="features-visual">
+      <div class="features-box main">
+        <p class="stat-label">Compromisso</p>
+        <p class="stat-value">100%</p>
+        <p class="stat-desc">de pontualidade em cada corrida</p>
+      </div>
+      <div class="features-box accent"></div>
+      <div class="features-box accent2"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PAGAMENTO -->
+<div class="payment">
+  <p class="payment-label">Formas de pagamento</p>
+  <div class="payment-line"></div>
+  <div class="payment-methods">
+    <span class="payment-method">Dinheiro</span>
+    <span class="payment-method">Pix</span>
+    <span class="payment-method">Cartão de Crédito</span>
+    <span class="payment-method">Cartão de Débito</span>
+  </div>
+</div>
+
+<!-- CTA FINAL -->
+<section class="cta-section" id="contato">
+  <p class="section-label">Agende agora</p>
+  <h2 class="section-title">Pronto para uma <em>experiência</em> diferente?</h2>
+  <a href="https://wa.me/55219XXXXXXXX" class="whatsapp-btn">
+    <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.115 1.528 5.845L.057 23.514a.5.5 0 0 0 .612.612l5.668-1.471A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.795 9.795 0 0 1-5.003-1.373l-.36-.214-3.724.966.988-3.611-.235-.372A9.795 9.795 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/>
+    </svg>
+    <span>Falar no WhatsApp</span>
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Velvet RJ</div>
+  <p class="footer-copy">Transfer Executivo · Rio de Janeiro</p>
+</footer>
+
+</body>
+</html>
